@@ -1,0 +1,129 @@
+<!-- This is a HTML note-->
+<!DOCTYPE html>
+<!-- doctype is not an html element but putting this tag here tells the browser
+that you are using HTML5.  It is a declaration, not a tag-->
+
+<!--To get this whole boilerplate (template), you can do the following:
+type an exclamation "!" and then hit the tab key-->
+
+<!--To open live server, you can right click on the file and select "Open with live server"
+or you can key in "Command shift P"(Mac) or "Ctrl Shift P" and 
+then type ">Live Server: Open with Live Server"-->
+
+<html lang="en">
+    <!--html tag is the root element, ancestor of all elements, and the parent of head and body-->
+    <head>
+        <!--head is the meta information about the document-->
+        <!--head and body tags are the chidren elements of the html tag-->
+        <!--the meta tags and title tag are children of the head element
+        and are decendants of the html element-->
+        <meta charset="UTF-8">
+        <!-- By setting charset to "utf-8", we can use any other language,
+        otherwise we can only use the English language characters-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--
+            The viewport is the user's visible area of a web page.
+            The viewport varies with the device, and will be smaller on a mobile phone than on a computer screen.
+            This gives the browser instructions on how to control the page's dimensions and scaling.
+        -->
+        <title>Bootcamp 44</title>
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <style>
+            html {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            * {
+                font-family: inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <!--the body is the visible (or rendered) content of the document-->
+        <header>
+            <nav></nav>
+        </header>
+        <article>
+            <h1 style="background-color: red;">Hi class!!</h1>
+            <p>This is a <strong>paragraph</strong> and it has an inline tag inside of it.</p>
+            <h2>Hi class..</h2>
+            <p>Try this link here:<a href="https://www.google.com/">Google</a></p>
+            <p>This link will redirect to your home page: <a href="/home.html">Home</a></p>
+            <h3 class="hello">Hi class</h3>
+            <p>The "em" tag <em>emphasizes</em> by putting the word in italics</p>
+            <h4>Hi class..</h4>
+            <blockquote>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </blockquote>
+            <h5>Hi class..</h5>
+                <div><p>This is a div</p></div>
+            <h6>Hi class...</h6>
+                <span>I am a span</span>
+            <h7>I will just default to text because there are only 6 h tags h1-h6</h7>
+            <div>Divs are mostly used to layout elements in a document.  Use symantic tags whenever possible</div>
+            <figure>
+                <img src="/assets/images/dog.jpg" alt="Dog image" style="width: 400px; height: 400px;">
+            </figure>
+        </article>
+        <aside>
+            <h2>My Ordered List</h2>
+            <ol>
+                <li class="bye">item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+            </ol>
+            <h2>My Unordered List</h2>
+            <ul>
+                <li class="bye">item 1</li>
+                <li>item 2</li>
+                <li class="bye">item 3</li>
+            </ul>
+        </aside>
+        <section>
+            <h3>Form Section</h3>
+            <form action="" method="">
+                <input type="text" name="username" placeholder="Example input">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <p>Select any option to show that you're not a robot</p>
+                <div>
+                    <input type="radio" id="optionA" name="drone" value="optionA">
+                    <label for="optionA" id="optionA">optionA</label>
+                </div>
+                <div>
+                    <input type="radio" id="optionB" name="drone" value="optionB">
+                    <label for="optionB" id="optionB">optionB</label>
+                </div>
+                <div>
+                    <input type="radio" id="optionC" name="drone" value="optionC">
+                    <label for="optionC" id="optionC">optionC</label>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+        </section>
+        <section>
+            <h3>Block of code</h3>
+            <code>
+                function add(num1, num2){
+                    total = num1 + num2;
+                    return total
+                }
+            </code>
+            <h3>Media Area</h3>
+            <img style="width: 300px; height: 300px;" src="https://images.unsplash.com/photo-1598133894008-61f7fdb8cc3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80" alt="dog"/>
+            <div>
+                <audio controls>
+                    <source src="path_to_sound_file.mp3"/>
+                </audio>
+            </div>
+            <div>
+                <label for="file">File progress:</label>
+                <progress id="file" value="70" max="100">70%</progress>
+            </div>
+            <h3>Draw figures with canvas</h3>
+            <canvas width="320" height="240"></canvas>
+        </section>
+        <footer><small>Copyright of Codecore</small></footer>
+    </body>
+</html>
+

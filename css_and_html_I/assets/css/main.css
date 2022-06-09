@@ -1,0 +1,51 @@
+p {
+    background-color: aqua;
+}
+
+#optionA {
+    background-color: salmon;
+}
+
+.hello {
+    background-color: greenyellow;
+}
+
+h2, h4, h5, h1 {
+    background-color: pink;
+}
+
+li.bye {
+    background-color: blueviolet !important;
+}
+
+ol > li.bye {
+    background-color: brown;
+}
+
+ul > li {
+    font-size: 2em;
+}
+
+form label {
+    background-color: yellow;
+}
+
+/* visited link */
+a:visited {
+    color:hotpink;
+}
+
+/* unvisited link */
+a:link {
+    color:black;
+}
+
+/* mouse over link */
+a:hover {
+    color: blue;
+}
+
+/* Select all child elements except for last */
+ol > *:not(:last-child){
+    font-size: 10px;
+}
