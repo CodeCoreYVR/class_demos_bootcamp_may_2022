@@ -1,0 +1,98 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+/* * {
+    border: thin dotted navy;
+} */
+
+* {
+    font-family: 'Kdam Thmor Pro', sans-serif;
+}
+
+html {
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+}
+
+/* The below will be ignored because inline display elements ignore height and width, and vertical margins. */
+/* a tag is inline display */
+/* a {
+    height: 5em;
+} */
+
+/* textarea is inline-block display
+it does not start in a new line and also only takes up it's own width, but does not ignore 
+width and height and margins
+textarea {
+    width: 10px;
+} */
+
+/* this will let the cat image disappear from the web page */
+/* img.cat {
+    display: none;
+} */
+
+/* .div-4 {
+    float: left;
+} */
+
+/* .p1 {
+    float: right;
+} */
+
+/* .cat3 {
+float: left;
+} */
+
+/*================= Flexbox CSS: ================================*/
+
+/* Grab the flex-container which is tyhe parent element */
+/* Any element with the property set to display:flex is considered a "Flex Container" */
+
+.flex-container {
+    display: flex;
+    /* the above is necessary to make this element a flex container */
+    border: thin dotted black;
+    flex-direction: row;
+    /* the above sets the direction of the main axis that dictates 
+    the direction of the layout of the flex items */
+     /* Flex-direction is used to set the flow/main-axis of the flex-items */
+    /* By default flex-direction is set to row (left-right) */
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    /* the above is shorthand for a combination of flex-direction and flex-wrap */
+    justify-content:space-between;
+    /* Justify-content is used to align item within the main axis */
+    align-content: center;
+    /* Align-items is used to align item within the cross axis */
+    /*you can specify the gap size between items like below: */
+    gap: 50px;
+    row-gap: 10px;
+}
+
+#fi {
+    width: 200px;
+    height: 200px;
+    border: thin dotted hotpink;
+}
+
+.num-one, .num-three, .num-five, .num-seven, .num-nine, .num-eleven, .num-thirteen {
+    order: 2;
+}
+.num-two {
+    /* flex item properties: */
+    order: 3;
+    flex-grow: 1;
+    /* this flex item is also a flex container: */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .num-six {
+    flex-shrink: 5;
+} */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
