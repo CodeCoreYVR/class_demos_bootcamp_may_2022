@@ -27,6 +27,12 @@ const express = require('express');
 // const res = require('express/library/response');
 const app = express();
 
+//Logging Middleware----->
+//install morgan in our npm project: npm i morgan
+//now require it:
+const logger = require('morgan');
+app.use(logger('dev'));
+
 //------Common methods for App (express app)----->
 // http://expressjs.com/en/4x/api.html#app.listen
 //require('express') returns a function that returns an instance of an express app
@@ -67,3 +73,5 @@ const DOMAIN = "localhost" //loopback address: 127.0.0.1
 app.listen(PORT, DOMAIN, () => {
     console.log(`Server is listening on http://${DOMAIN}:${PORT}`)
 })
+
+
