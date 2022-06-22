@@ -56,7 +56,17 @@ app.use(logger('dev'));
 
 //Root page
 app.get('/', (request, response) => {
-    response.send("<h1>This is my root page! Hi There :) </h1>")
+    // response.send("<h1>This is my root page! Hi There :) </h1>")
+    response.render('welcome', {
+        title: 'Welcome to Our Meme Page',
+        memes: [
+            "https://www.probytes.net/wp-content/uploads/2018/01/2.jpg",
+            "https://www.probytes.net/wp-content/uploads/2018/01/20.png",
+            "https://www.probytes.net/wp-content/uploads/2018/01/r_389776_tqMPa-1.jpg",
+            "https://www.loginradius.com/blog/async/static/ce430bf1882a235044353d4b4d098275/e85cb/12.png",
+            "https://res.cloudinary.com/practicaldev/image/fetch/s--MOKp0Jew--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://www.probytes.net/wp-content/uploads/2018/01/4-1.png"
+        ]
+    })
 })
 
 //DEMO HELLO WORLD
@@ -65,6 +75,28 @@ app.get('/', (request, response) => {
 app.get('/hello_world', (request, response) => {
     response.send("<h1>Hello World</h1>")
 })
+
+//SURVEY PAGE
+app.get('/survey', (req, res) => {
+    res.render('survey')
+})
+
+//----Handle Submit of Survey Page---->
+app.get('/submit', (req,res) => {
+    // res.send('thank you')
+    const fullName = req.query.fullName;
+    const favouriteColour = req.query.favouriteColour;
+    const favouriteDay = req.query.favouriteDay;
+    res.render('thank_you', {
+        fullName: fullName,
+        favouriteColour: favouriteColour,
+        favouriteDay: favouriteDay
+    })
+})
+
+//SET VIEW ENGINE---->
+app.set('view engine', 'ejs')
+app.set('views', 'views')
 
 //---Start listening to the server----->
 const PORT = 3000;
