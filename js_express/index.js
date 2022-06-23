@@ -27,6 +27,28 @@ const express = require('express');
 // const res = require('express/library/response');
 const app = express();
 
+app.use(express.urlencoded({extended: true}))
+
+//------Cookie Parser------>
+//req.body.cookie
+const cookieParser = require('cookie-parser')
+
+app.use(cookieParser())
+
+//------Custom Middleware-------->
+app.use((req, res, next) => {
+    const username = req.cookies.username
+
+    //res.locals are properties set and are available in any views
+    res.locals.username = '';
+
+    if(username){
+        res.locals.username = username;
+        console.log(`Signed in as ${username}`)
+    }
+    next();
+})
+
 //-----STATIC ASSETS-------->
 //Static asset: require path that's already accessible through express
 //In turn we will use express.static through the path
@@ -50,6 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //install morgan in our npm project: npm i morgan
 //now require it:
 const logger = require('morgan');
+const req = require('express/lib/request');
 app.use(logger('dev'));
 
 //------Common methods for App (express app)----->
@@ -73,6 +96,8 @@ app.use(logger('dev'));
 //app.set() used to set application variables. Mainly used to configure application wide variables
 // like a patrh to VIew directory or path to static files
 
+
+//---------------------------ROUTERS--------------------------------->
 //Root page
 app.get('/', (request, response) => {
     // response.send("<h1>This is my root page! Hi There :) </h1>")
@@ -122,10 +147,26 @@ app.get('/submit', (req,res) => {
     })
 })
 
+//'----------Sign in POST request-------->
+app.post('/sign_in', (req, res) =>{
+    // res.send(req.body)   //-> this is available through urlencoded
+    const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 // a day in milliseconds
+    const username = req.body.username
+    res.cookie('username', username, {maxAge: COOKIE_MAX_AGE})
+    res.redirect('/')
+})
+
+//'----------Sign in POST request-------->
+app.post('/sign_out', (req, res) =>{
+    res.clearCookie('username')
+    res.redirect('/')
+})
+
 //SET VIEW ENGINE---->
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
+//---------------------------SERVER--------------------------------->
 //---Start listening to the server----->
 const PORT = 3000;
 const DOMAIN = "localhost" //loopback address: 127.0.0.1

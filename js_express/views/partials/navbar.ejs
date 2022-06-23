@@ -16,6 +16,22 @@
                     <a class="nav-link" href="/hello_world">Hello World</a>
                 </li>
             </ul>
+            <% if (username) { %>
+                <li>
+                    <span>Hello, <%- username %>!</span>
+                    <form action="/sign_out" method="POST">  
+                            <button type="submit" class='btn btn-outline-dark'>Sign Out</button>
+                    </form>
+                </li>
+            <% } else { %>
+                <li>
+                    <form action="/sign_in" method="POST" class='form-inline'>
+                        <input class='form-control mr-2' name='username' placeholder='Username' type="text">
+                        <button type="submit" class='btn btn-outline-dark'>Sign In</button>
+                    </form>
+                </li>
+            <% } %>
+
     </nav>
 </header>
 <br>
