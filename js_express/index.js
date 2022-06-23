@@ -73,7 +73,8 @@ app.get('/', (request, response) => {
 //first argument: path
 //second argument: request handler
 app.get('/hello_world', (request, response) => {
-    response.send("<h1>Hello World</h1>")
+    // response.send("<h1>Hello World</h1>")
+    response.render('hello_world')
 })
 
 //SURVEY PAGE
