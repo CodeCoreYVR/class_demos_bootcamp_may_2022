@@ -7,7 +7,7 @@
 
 //------------------Create .gitignore file------------------------->
 //This file will hold any information you don't want to share,
-//like sensitive info or large librarie4s like node_modules
+//like sensitive info or large libraries like node_modules
 //You can use gitignore.io to generate content for the .gitignore file
 //You can also: curl https://www.toptal.com/developers/gitignore/api/node,macos,linux,windows > .gitignore
 //This will read, copy, and paste into .gitignore
@@ -27,6 +27,12 @@ const express = require('express');
 // const res = require('express/library/response');
 const app = express();
 
+// Require method-override middleware
+// npm i method-override
+// This enables client to make HTTP request with forms that are not
+// just GET or POST requests (DELETE, PATCH, etc)
+const methodOverride = require('method-override'); 
+
 //--------------------BODY PARSER and URLENCODED MIDDLEWARE-------------------->
 //To be able to use data from a POST HTTP request, like filling out a form and submitting:
 //Previously we had to add body parser as an extra package but we don't need to install body parser anymore, 
@@ -43,6 +49,14 @@ const app = express();
 app.use(express.urlencoded({extended: true}))
 //It will modify the request object given to routes by adding a property to it named body
 //So request.body will be an object containing the data from our form
+
+//-----------------Method Override Middleware--------------------------
+app.use(methodOverride((req,res) => {
+    if (req.body && req.body._method) {
+        const method = req.body._method;
+        return method
+    }
+}))
 
 //------Cookie Parser------>
 //req.body.cookie
@@ -197,6 +211,10 @@ app.post('/sign_out', (req, res) =>{
     res.clearCookie('username')
     res.redirect('/')
 })
+
+// ---------------POST ROUTER ACCESSING POST ROUTES-----------
+const postRouter = require('./routes/posts');
+app.use('/posts', postRouter)
 
 //SET VIEW ENGINE---->
 //first "npm i ejs" to add ejs as a dependency to the project
