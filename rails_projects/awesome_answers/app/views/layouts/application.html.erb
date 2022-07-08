@@ -11,6 +11,11 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to 'Questions Index Page', questions_path %> |
+      <%= link_to 'New Question Page', new_question_path %>
+    </nav>
+    <%= flash[:notice] || flash[:alert] %>
     <%= yield %>
   </body>
 </html>
