@@ -1,11 +1,13 @@
 class AnswersController < ApplicationController
 
   before_action :find_question
+  before_action :authenticate_user!
   # create / destroy
 
   def create
     @answer = Answer.new(params.require(:answer).permit(:body))
     @answer.question = @question
+    @answer.user = current_user
     if @answer.save
       redirect_to question_path(@question), notice: "Answer created!"
       # if saved successfully then redirect to the show page of the question
@@ -20,8 +22,6 @@ class AnswersController < ApplicationController
       # it's the page /questions/show.html.erb
       render '/questions/show', status: 303
     end
-
-
   end
 
   def destroy

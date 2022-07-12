@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   #7 destroy: DELETE "/resources/:id" - delete a record with specific id from the database
   #------------------------------------------------------------------------------->
 
+  get '/', to: 'welcome#new', as: :root
   # # new
   # get 'questions/new'
 
@@ -46,6 +47,14 @@ Rails.application.routes.draw do
     resources :answers, only: [:create, :destroy]
     # except: [:show, :new, :edit, :update]
   end
+
+  resources :users, only:[:new, :create]
+
+  resource :session, only:[:new, :create, :destroy]
+  # 'resource' is singular instead of 'resources'
+  # Unlike 'resources', 'resource' will create routes that do CRUD operations
+  # on only one thing. Also there will be no index routes, and no route
+  # will have an ':id' wildcard. But the controller name is still plural
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

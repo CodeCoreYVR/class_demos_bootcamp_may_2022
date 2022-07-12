@@ -27,6 +27,8 @@ class Question < ApplicationRecord
   #before_save will turn title into "Hello" before saving into the database
 
   has_many :answers, dependent: :destroy
+
+  belongs_to :user
   # dependent :destroy / :nullify
   # :destroy will delete the records in answers table that related to the question
   # :nullify will set question_id to null for the records that related to the question 

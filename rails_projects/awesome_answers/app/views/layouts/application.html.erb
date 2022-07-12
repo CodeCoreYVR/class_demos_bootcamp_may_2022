@@ -13,7 +13,14 @@
   <body>
     <nav>
       <%= link_to 'Questions Index Page', questions_path %> |
-      <%= link_to 'New Question Page', new_question_path %>
+      <%= link_to 'New Question Page', new_question_path %> |
+      <% if(user_signed_in?) %>
+        Hello <%= current_user.full_name %>
+        <%= button_to "Log out", session_path, method: :delete %>
+      <% else %>
+        <%= link_to 'Sign In Page', new_session_path %> |
+        <%= link_to 'Sign Up Page', new_user_path %> |
+      <% end %>
     </nav>
     <%= flash[:notice] || flash[:alert] %>
     <%= yield %>
