@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   # =============CALLBACKS=====================
   before_action :find_question, only: [:edit, :update, :show, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :authorize_user!, only:[:edit, :update, :destroy]
   # =============CREATE========================
   def new
     # Because Rails form helper methods need an instance of a model to work, we create a new instance
@@ -60,6 +61,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def authorize_user!
+    redirect_to root_path, alert: "Not authorized" unless can?(:crud, @question)
+  end
 
   def find_question
     @question = Question.find params[:id]

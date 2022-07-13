@@ -26,8 +26,12 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find params[:id]
-    @answer.destroy
-    redirect_to question_path(@question), notice: "Answer deleted"
+    if can?(:crud, @answer)
+      @answer.destroy
+      redirect_to question_path(@question), notice: "Answer deleted"
+    else
+      redirect_to root_path, alert: "Not authorized"
+    end
   end
 
   private
