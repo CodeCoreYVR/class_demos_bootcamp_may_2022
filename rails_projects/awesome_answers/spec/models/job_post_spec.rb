@@ -11,7 +11,8 @@ RSpec.describe JobPost, type: :model do
     describe "title" do
       it "requires a title to be present" do
         #GIVEN
-        job_post = JobPost.new()
+        # job_post = JobPost.new()
+        job_post = FactoryBot.build(:job_post, title: nil)
 
         #WHEN
         job_post.valid?
@@ -24,19 +25,21 @@ RSpec.describe JobPost, type: :model do
 
       it "requires a unique title" do
         #GIVEN
-        persisted_job_post = JobPost.create(
-          title: "Full Stack Developer",
-          description: RANDOM_100_CHARS,
-          min_salary: 35_000,
-          location: 'Vancouver'
-        )
+        # persisted_job_post = JobPost.create(
+        #   title: "Full Stack Developer",
+        #   description: RANDOM_100_CHARS,
+        #   min_salary: 35_000,
+        #   location: 'Vancouver'
+        # )
 
-        job_post = JobPost.new(
-          title: persisted_job_post.title,
-          description: RANDOM_100_CHARS,
-          min_salary: 35_000,
-          location: 'Vancouver'
-        )
+        # job_post = JobPost.new(
+        #   title: persisted_job_post.title,
+        #   description: RANDOM_100_CHARS,
+        #   min_salary: 35_000,
+        #   location: 'Vancouver'
+        # )
+        persisted_job_post = FactoryBot.create(:job_post)
+        job_post = FactoryBot.build(:job_post, title: persisted_job_post.title)
 
         #WHEN
         job_post.valid?
@@ -52,7 +55,8 @@ RSpec.describe JobPost, type: :model do
       it "requires a description to be present" do
 
         #GIVEN
-        job_post = JobPost.new
+        # job_post = JobPost.new
+        job_post = FactoryBot.build(:job_post, description: nil)
 
         #WHEN
         job_post.valid?
@@ -63,7 +67,8 @@ RSpec.describe JobPost, type: :model do
 
       it "requires a description to be at least 100 characters" do
         #GIVEN
-        job_post = JobPost.new(description: "abc", title: "This is a unique title")
+        # job_post = JobPost.new(description: "abc", title: "This is a unique title")
+        job_post = FactoryBot.build(:job_post, description: "I am less than 100 chars")
 
         #WHEN
         job_post.valid?
@@ -87,8 +92,9 @@ RSpec.describe JobPost, type: :model do
 
       it "requires min_salary to be at least 30_000" do
         #GIVEN
-        job_post = JobPost.new(min_salary: 25_000, description: RANDOM_100_CHARS, title: "My min salary greater than 30k")
-        
+        # job_post = JobPost.new(min_salary: 25_000, description: RANDOM_100_CHARS, title: "My min salary greater than 30k")
+        job_post = FactoryBot.build(:job_post, min_salary: 25_000)
+
         #WHEN
         job_post.valid?
 
@@ -100,7 +106,8 @@ RSpec.describe JobPost, type: :model do
     describe "location" do
       it "requires a location to be present" do
         #GIVEN
-        job_post = JobPost.new
+        # job_post = JobPost.new
+        job_post = FactoryBot.build(:job_post, location: nil)
 
         #WHEN
         job_post.valid?
