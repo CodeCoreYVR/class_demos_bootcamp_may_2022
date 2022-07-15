@@ -153,4 +153,17 @@ RSpec.describe JobPostsController, type: :controller do
     
         end
     end
+
+    describe "#edit" do
+        it "requires the render of the edit template" do
+            #GIVEN
+            job_post = FactoryBot.create(:job_post)
+
+            #WHEN
+            get(:edit, params: {id: job_post.id})
+
+            #THEN
+            expect(response).to render_template(:edit)
+        end
+    end
 end
