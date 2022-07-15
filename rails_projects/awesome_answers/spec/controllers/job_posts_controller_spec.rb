@@ -208,4 +208,29 @@ RSpec.describe JobPostsController, type: :controller do
             end
         end
     end
+
+    describe "#destroy" do
+        before do
+            #GIVEN
+            @job_post = FactoryBot.create(:job_post)
+
+            #WHEN
+            delete(:destroy, params: {id: @job_post.id})
+        end
+
+        it "requires a record of job post to be removed from the database" do
+            #THEN
+            expect(JobPost.find_by(id: @job_post.id)).to be(nil)
+        end
+        
+        it "requires a redirect to the job posts index page" do
+            #THEN
+            expect(response).to redirect_to(job_posts_path)
+        end
+
+        it "requires a flash message that the record was deleted" do
+            #THEN
+            expect(flash[:danger]).to be #asserts that the danger property of the flash message exists
+        end
+    end
 end
