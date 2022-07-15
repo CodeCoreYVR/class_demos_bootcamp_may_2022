@@ -31,4 +31,19 @@ class JobPostsController < ApplicationController
 
     def edit
     end
+
+    def update
+        @job_post = JobPost.find params[:id]
+        @job_post.update params.require(:job_post)
+        .permit(
+          :title,
+            :description,
+            :location,
+            :company_name,
+            :min_salary,
+            :max_salary  
+        )
+        redirect_to @job_post
+    end
+
 end

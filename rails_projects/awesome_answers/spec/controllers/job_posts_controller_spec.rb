@@ -166,4 +166,46 @@ RSpec.describe JobPostsController, type: :controller do
             expect(response).to render_template(:edit)
         end
     end
+
+    describe "#update" do
+        before do
+            #GIVEN
+            @job_post = FactoryBot.create(:job_post)
+        end
+        context "with valid parameters" do
+            it "requires an update to the job post record with new attributes" do
+                #part of GIVEN
+                new_title = "#{@job_post.title} Plus some changes"
+
+                #WHEN
+                patch(:update, params: {id: @job_post.id, job_post: {title: new_title}})
+
+                #THEN
+                expect(@job_post.reload.title).to eq(new_title)
+            end
+
+            it "requires a redirect to the show page of the updated job post" do
+                #part of GIVEN
+                new_title = "#{@job_post.title} Plus some changes"
+
+                #WHEN
+                patch(:update, params: {id: @job_post.id, job_post: {title: new_title}})
+
+                #THEN
+                expect(response).to redirect_to(@job_post)
+            end
+        end
+
+        context "with invalid parameters" do
+            it "requires the job post record not to be updated in the database" do
+                #WHEN
+                patch(:update, params: {id: @job_post.id, job_post: {title: nil}}) #we will grab the job_post and make it invalid
+                job_post_after_update = JobPost.find(@job_post.id)
+
+                #THEN
+                expect(job_post_after_update.title).to eq(@job_post.title)
+                #it should remain the same because change not saved in db
+            end
+        end
+    end
 end
