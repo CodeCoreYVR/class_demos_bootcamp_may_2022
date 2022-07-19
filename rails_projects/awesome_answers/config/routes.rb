@@ -46,6 +46,10 @@ Rails.application.routes.draw do
     # /questions/:question_id/answers method post
     resources :answers, only: [:create, :destroy]
     # except: [:show, :new, :edit, :update]
+
+    resources :likes, shallow: true, only: [:create, :destroy]
+
+    get :liked, on: :collection
   end
 
   resources :users, only:[:new, :create]

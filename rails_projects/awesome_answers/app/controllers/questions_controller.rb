@@ -39,6 +39,11 @@ class QuestionsController < ApplicationController
   def show
     @answers = @question.answers.order(created_at: :desc)
     @answer = Answer.new
+    @like = @question.likes.find_by(user: current_user)
+    # @like = @question.likes.find_by(user: current_user)
+    # use the lines of the @question to see if there is a record that user_id is the current user
+    # if there is => @like is the Like model
+    # otherwise => @like is nil
   end
 
   # ===============UPDATE==========================
@@ -58,6 +63,11 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     redirect_to questions_path
+  end
+
+  # ==============CUSTOM==================
+  def liked
+    @questions = current_user.liked_questions
   end
 
   private

@@ -33,6 +33,19 @@ class Question < ApplicationRecord
   # :destroy will delete the records in answers table that related to the question
   # :nullify will set question_id to null for the records that related to the question 
 
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user 
+
+#   has_and_belongs_to_many(
+#     :likers, #The name we can set it whatever we want
+#     {
+#         class_name: "User", # the model that associating to
+#         join_table: "likes", # the join table
+#         association_foreign_key: "user_id", # the foreign key for the associated table
+#         foreign_key: "question_id" # foreign key for the current table(Question)
+#     }
+#   )  
+
   #==============VALIDATIONS===============>
   # Create validations by using the 'validates' method
   # The arguments are (in order):
