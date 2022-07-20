@@ -20,7 +20,8 @@
   Then import bootstrap like below:
  */
  @import "bootstrap";
-
+ @import "selectize";
+ @import "selectize.bootstrap3";
  body {
   background-color: bisque;
  }

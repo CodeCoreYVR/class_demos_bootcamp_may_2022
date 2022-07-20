@@ -46,6 +46,11 @@ class Question < ApplicationRecord
 #     }
 #   )  
 
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings#, source: :tag
+  #if the name of the association (i.e. tags) is the same as the source but singularized
+  # (i.e. tag) then 'source' named argument can be omitted
+
   #==============VALIDATIONS===============>
   # Create validations by using the 'validates' method
   # The arguments are (in order):
@@ -89,6 +94,31 @@ class Question < ApplicationRecord
   # end
 
   # select * from questions where title ilike %??% and body ilike %???%;
+
+  #-------------ADD CUSTOM TAG METHODS TO GET OR SET TAGS WITH SELECTIZE---------------->
+
+  #Getter Method
+  def tag_names
+    self.tags.map(&:name).join(", ")
+    #The & symbol is used to tell Ruby that the following argument
+    #should be given as a block to the method. So the line
+    #self.tags.map(&:name).join(", ") is equal to
+    #self.tags.map { |t| t.name.join(", ")}
+    #So the above will iterate over the collection of self.tags
+    #and build an array of results of the name method
+    #called on every item
+  end
+
+  #Setter
+  #This is simnilar to implementing an attribute writer "attr_writer"
+  #Appending = at the end of a method name allows us to implement a setter
+  #A setter is a method that is assignable, for example:
+  #q.tag_names = 'another new tag name'
+  def tag_names=(rhs)
+    self.tags = rhs.strip.split(/\s*, \s*/).map do |tag_name|
+      Tag.find_or_initialize_by(name: tag_name)
+    end
+  end
 
   private
 

@@ -25,6 +25,37 @@
     <br>
     <%= form.text_area :body, cols:50, rows: 5 %>
   </div>
+  <div class="tag-wrapper">
+    <%= form.label :tag_names %>
+    <%= form.text_field :tag_names %>
+  </div>
   <%= form.submit %>
 
 <% end %>
+
+<script>
+  <%# selectize doc:
+    https://github.com/selectize/selectize.js/blob/master/docs/usage.md
+    %>
+
+    $(function() {
+      $('#question_tag_names').selectize({
+        delimeter: ',',
+        persist: false,
+        labelField: 'name', //Column name in database
+        valueField: 'name', //Column name in database
+        searchField: 'name', //Column name in database
+        options: <% Tag.select(:name).to_json(except: [:id]).html_safe %>,
+        //The above line selects only names from tags table and converts them to
+        //a json array of objects without including ids and makes sure it is html safe string
+        //options: [{"name": "first tag name"}, {"name": "second tag name"}, etc]
+        create: function(input){
+          return {
+            name: input
+          }
+        }
+      });
+    });
+</script>
+
+

@@ -18,7 +18,15 @@
 <small>
   Liked by: <%= @question.likes.count %> users
 </small>
-
+<% unless @question.tags.empty? %>
+  <p> Tags:
+    <% @question.tags.each do |tag| %>
+      <%= link_to(
+        tag.name, '/'
+      )%>
+    <% end %>
+  </p>
+<% end %>
 <h4>Answers</h4>
 <hr>
 
