@@ -1,5 +1,5 @@
 class Tag < ApplicationRecord
-    before_validation :downcase_name
+    before_save :downcase_name
 
     #ASSOCIATIONS
     has_many :taggings, dependent: :destroy
