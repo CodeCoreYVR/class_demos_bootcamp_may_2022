@@ -66,4 +66,16 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :job_posts, only: [:new, :create, :show, :index, :edit, :update, :destroy]
+
+  #Delayed Job Routes:
+  #We will go to this url to see this route: 'localhost:3000/delayed_job/overview'
+  match(
+    "/delayed_job",
+    to: DelayedJobWeb,
+    anchor: false,
+    via: [:get, :post]
+  )
+
+  # https://guides.rubyonrails.org/active_job_basics.html #👈🏻 Link for active jobs
+
 end
