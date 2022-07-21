@@ -41,7 +41,8 @@ Rails.application.configure do
   #Convert it to true so that mailers won't fail silently
 
   #Add letter opener configurations for mailers:
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   #Above configs were taken from https://github.com/ryanb/letter_opener
   config.action_mailer.default_url_options={
