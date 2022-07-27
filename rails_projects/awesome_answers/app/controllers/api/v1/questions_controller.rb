@@ -35,6 +35,17 @@ class Api::V1::QuestionsController < Api::ApplicationController
         end
     end
 
+    def destroy
+        question = Question.find(params[:id])
+        if question.destroy
+            # head :ok
+            render( json: {status: 200 })
+        else
+            #head :bad_request
+            render( json: {status: 500 })
+        end
+    end
+
     private
 
     def question_params
