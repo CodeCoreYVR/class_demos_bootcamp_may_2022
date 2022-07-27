@@ -81,7 +81,7 @@ Rails.application.routes.draw do
   #===========API routes=====================>
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :questions, only: [:index, :show]
+      resources :questions, only: [:index, :show, :create]
     end
 
     # namespace v2: do
