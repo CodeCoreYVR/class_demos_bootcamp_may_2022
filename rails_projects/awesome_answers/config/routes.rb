@@ -78,4 +78,15 @@ Rails.application.routes.draw do
 
   # https://guides.rubyonrails.org/active_job_basics.html #👈🏻 Link for active jobs
 
+  #===========API routes=====================>
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :questions, only: [:index]
+    end
+
+    # namespace v2: do
+    #   resources :whatever
+    # end
+  end
+
 end
