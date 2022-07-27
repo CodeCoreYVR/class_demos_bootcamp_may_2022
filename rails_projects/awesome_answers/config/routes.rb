@@ -79,6 +79,12 @@ Rails.application.routes.draw do
   # https://guides.rubyonrails.org/active_job_basics.html #👈🏻 Link for active jobs
 
   #===========API routes=====================>
+  #The namespace method in Rails makes it so that your app will automatically
+  #look in a directory called api, then in a sub directory called v1 for QuestionsController
+  #api/v1/questions
+
+  #The option 'defaults: {format: :json } will set json as the default response 
+  #format for all routes contained within the block
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :questions, only: [:index, :show, :create, :update, :destroy]
