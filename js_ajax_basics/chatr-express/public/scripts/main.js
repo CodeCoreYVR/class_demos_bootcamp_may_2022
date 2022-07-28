@@ -90,7 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li>
                     <strong>${message.id}</strong>
                     ${message.body}
-                    <i data-id={message.id} class="delete-link">x</i>
+                    </br>
+                    <button data-id=${message.id} class="delete-button">Delete</button>
                 </li>
                 `;
             }).join('')
@@ -118,6 +119,18 @@ document.addEventListener("DOMContentLoaded", () => {
             refreshMessages()
             currentTarget.reset() //reset empties the form inputs
         })
+    })
+
+    messagesUL.addEventListener('click', event => {
+        const { target } = event //the element that triggered the event
+
+        if (target.matches('.delete-button')){
+            Message.delete(target.dataset.id)
+        .then(() => {
+            refreshMessages()
+            console.log(`Deleted message with id: ${target.dataset.id}`)
+        })
+        }
     })
 
 })
