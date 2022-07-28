@@ -45,3 +45,16 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(loadMessages, refreshIntervalMsg)
 })
 
+//POST AJAJ req ro create hard code messages
+// const fd = new FormData();
+// fd.set("body", "Hello World")
+// fetch("/messages", {
+//     method: "POST",
+//     body: fd
+// })
+
+fetch("/messages", {
+    method: "POST",
+    headers: { "Content-type": "application/json"},
+    body: JSON.stringify({ body: "Goodbye World"})
+})
