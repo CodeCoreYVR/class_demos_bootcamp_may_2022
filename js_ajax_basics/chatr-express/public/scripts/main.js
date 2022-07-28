@@ -99,4 +99,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(refreshMessages, 3000)
 
+    messageForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const { currentTarget } = event; //the form element
+
+        //Use FormData to create an object representation
+        //of key value pairs of the form that we pass as an argument
+        //to the constructor
+        const formData = new FormData(currentTarget)
+
+        //formData.get returns the value associated with the given key
+        //from within the FormData objetc">
+
+        Message.create({ body: formData.get("body")})
+        .then(() => {
+            console.log("Message created!")
+            refreshMessages()
+            currentTarget.reset() //reset empties the form inputs
+        })
+    })
+
 })
+
