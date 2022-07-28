@@ -1,137 +1,182 @@
 // Write chatr code here!
 
-//====FETCH API======>
-
-//GET /messages -> a JSON ARRAY OF MESSAGES
-//POST /messages -> A confirmation (creates a message)
-//PATCH /messages/:id -> A confirmation (edit message)
-//DELETE /messages/:id -> A confirmation (deletes a message)
-
-//GET request
-//Calling "fetch" with a URL as its only argument, it will makes
-//a GET request to that URL.  It is Asynchronous and returns a promise
-
-fetch("http://localhost:3434/messages")
-//fetch returns an object that represents the HTTP response
-//you can use the async methods .text() or .json() on the response
-//to parse its body.  Make sure to return it from the callback
-.then(response => response.json())
-// .then(data => console.table(data))
-.then(console.table)
-
-//list of messages
-// const loadMessages = () => {
-//     fetch("/messages")
-//     .then(res => res.json())
-//     .then(messages => {
-//         const messagesContainer = document.querySelector("#messages");
-//         let messagesHTML = "";
-//         messages.forEach(message => {
-//             messagesHTML += `
-//             <li>
-//                 ${message.body}
-//                 <i data-id={message.id} class="delete-link">x</i>
-//             </li>
-//             `;
-//         })
-//         messagesContainer.innerHTML = messagesHTML
-//     })
+//Sample Message:
+// {
+//     body: "message body",
+//     createdAt: "2020-12-10T09:09:09.1234",
+//     flagged: false,
+//     id: 1,
+//     updatedAt: "2020-12-10T09:09:09.1234",
+//     username: "John"
 // }
 
-// //refresh list intermittently
-// const refreshIntervalMsg = 3000;
-// document.addEventListener("DOMContentLoaded", () => {
-//     loadMessages();
-//     setInterval(loadMessages, refreshIntervalMsg)
-// })
-
-//POST AJAJ req ro create hard code messages
-// const fd = new FormData();
-// fd.set("body", "Hello World")
-// fetch("/messages", {
-//     method: "POST",
-//     body: fd
-// })
-
-// fetch("/messages", {
-//     method: "POST",
-//     headers: { "Content-type": "application/json"},
-//     body: JSON.stringify({ body: "Goodbye World"})
-// })
-
+//Create a helper method for messages
 const Message = {
-    index(){
-        return fetch("http://localhost:3434/messages")
-        .then(response => response.json())
-    },
-    create(params){
-        return fetch('/messages', {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify(params)
-        })
-    },
-    delete(id){
-        return fetch(`/messages/${id}`, {
-            method: "DELETE"
-        })
+  all() {
+    return fetch("/messages").then((res) => res.json());
+  },
+  //usage:
+  //Message.all().then(data => console.table(data))
+  create(params) {
+    return fetch("/messages", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(params),
+    });
+  },
+  //usage
+  //Message.create({ body: "Hello World"}).then(console.log("Message created"))
+  destroy(id) {
+    return fetch(`messages/${id}`, { method: "DELETE" });
+  },
+};
+
+const loadMessages = () => {
+  const messagesContainer = document.querySelector("#messages");
+  Message.all().then((messages) => {
+    let htmlString = "";
+    //flagFilter button will filter the messages to only display
+    //the flagged messages
+    const flagFilter = document.querySelector("#flag-filter");
+    if (flagFilter.innerHTML === "All Messages") {
+      // Initially the .map method works to display the index of messages
+      // but changing the code to .forEach makes it easier to manipulate
+      // the individual messages and its attributes
+      // let htmlString = "";
+      // messagesContainer.innerHTML = messages
+      // .map(
+      //   m =>
+      messages.forEach((m) => {
+        if (m.flagged) {
+          htmlString += `
+            <li>
+              <strong>${m.id}</strong> ${m.username}: ${m.body}
+              <button data-id="${m.id}" class="btn-delete">Delete</button>
+              <button><i data-id=${m.id} data-flagged=${m.flagged} class="fas fa-flag"></i></button> 
+            </li>
+            `;
+        } else {
+          htmlString += "";
+        }
+      });
+      // )
+      // .join('');
+      messagesContainer.innerHTML = htmlString;
+    } else {
+      messages.forEach((m) => {
+        let flag;
+        if (m.flagged) {
+          flag = "fas";
+        } else {
+          flag = "far";
+        }
+        htmlString += `
+          <li>
+            <strong>${m.id}</strong> ${m.username}: ${m.body}
+            <button data-id="${m.id}" class="btn-delete">Delete</button>
+            <button><i data-id=${m.id} data-flagged=${m.flagged} class="${flag} fa-flag"></i></button> 
+          </li>
+          `;
+      });
+      messagesContainer.innerHTML = htmlString;
     }
-}
+  });
+};
 
 document.addEventListener("DOMContentLoaded", () => {
-    const messagesUL = document.querySelector("#messages")
-    const messageForm = document.querySelector("#new-message")
-    
-    const refreshMessages = () => {
-        Message.index()
-        .then(messages => {
-            messagesUL.innerHTML = messages.map( message => {
-                return `
-                <li>
-                    <strong>${message.id}</strong>
-                    ${message.body}
-                    </br>
-                    <button data-id=${message.id} class="delete-button">Delete</button>
-                </li>
-                `;
-            }).join('')
-        })
+  loadMessages();
+
+  const newMessageForm = document.querySelector("#new-message");
+
+  newMessageForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // In this case, the `currentTarget` will be node of the form.
+    const { currentTarget } = event;
+    const formData = new FormData(currentTarget);
+
+    Message.create({
+      body: formData.get("body"),
+      username: formData.get("username"),
+    }).then(() => {
+      currentTarget.reset();
+      loadMessages();
+    });
+  });
+
+  const messagesContainer = document.querySelector("#messages");
+
+  messagesContainer.addEventListener("click", (event) => {
+    const { target } = event;
+    const deleteButton = target.closest(".btn-delete");
+
+    if (deleteButton) {
+      //You can console.log to determine if your event listener is obtaining
+      //the correct data you need to manipulate:
+      // console.log(
+      //   'Message id:',
+      //   // shortcut for reading & writing attributes
+      //   // beginning with data-
+      //   deleteButton.dataset.id,
+      //   deleteButton.getAttribute('data-id'),
+      // );
+
+      const { id } = deleteButton.dataset;
+
+      if (!confirm(`Are you want to delete Message (id=${id})?`)) {
+        return;
+      }
+
+      Message.destroy(id).then(() => {
+        loadMessages();
+      });
     }
+  });
 
-    setInterval(refreshMessages, 3000)
+  messagesContainer.addEventListener("click", (event) => {
+    const { target } = event;
+    const flagButton = target.closest("i.fa-flag");
 
-    messageForm.addEventListener('submit', event => {
-        event.preventDefault();
+    if (flagButton) {
+      const messageFlagged = flagButton.getAttribute("data-flagged");
+      const messageId = flagButton.getAttribute("data-id");
 
-        const { currentTarget } = event; //the form element
+      if (messageFlagged === "false") {
+        fetch(`/messages/${messageId}`, {
+          method: "PATCH",
+          body: JSON.stringify({ flagged: true }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then(() => {
+          loadMessages();
+        });
+      } else {
+        fetch(`/messages/${messageId}`, {
+          method: "PATCH",
+          body: JSON.stringify({ flagged: false }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then(() => {
+          loadMessages();
+        });
+      }
+    }
+  });
 
-        //Use FormData to create an object representation
-        //of key value pairs of the form that we pass as an argument
-        //to the constructor
-        const formData = new FormData(currentTarget)
+  const filterButton = document.querySelector("#flag-filter");
 
-        //formData.get returns the value associated with the given key
-        //from within the FormData objetc">
-
-        Message.create({ body: formData.get("body")})
-        .then(() => {
-            console.log("Message created!")
-            refreshMessages()
-            currentTarget.reset() //reset empties the form inputs
-        })
-    })
-
-    messagesUL.addEventListener('click', event => {
-        const { target } = event //the element that triggered the event
-
-        if (target.matches('.delete-button')){
-            Message.delete(target.dataset.id)
-        .then(() => {
-            refreshMessages()
-            console.log(`Deleted message with id: ${target.dataset.id}`)
-        })
-        }
-    })
-
-})
-
+  filterButton.addEventListener("click", () => {
+    filterButton.classList.toggle("filtered");
+    if (filterButton.getAttribute("class", "filtered")) {
+      filterButton.innerText = "All Messages";
+      loadMessages();
+    } else {
+      filterButton.innerText = "Flagged Messages";
+      loadMessages();
+    }
+  });
+});
