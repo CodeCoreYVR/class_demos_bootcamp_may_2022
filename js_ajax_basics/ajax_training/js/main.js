@@ -32,3 +32,24 @@ $.ajax({
     }
 })
 
+//-----------XML AJAX Pokemon Example-------->
+
+const getReq = new XMLHttpRequest();
+
+getReq.addEventListener(
+    'load',
+    function(){
+        console.log("Pikachu: ", this.responseText)
+    }
+)
+
+//open() initializes  request. It takes 2 arguments:
+//1 - name of the HTTP verb
+//2 - api endpoint/ url
+getReq.open(
+    "GET",
+    "http://pokeapi.co/api/v2/pokemon/pikachu"
+)
+
+//trigger the send of the request:
+getReq.send()
