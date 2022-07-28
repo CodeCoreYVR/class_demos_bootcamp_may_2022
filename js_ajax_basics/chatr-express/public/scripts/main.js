@@ -38,5 +38,10 @@ const loadMessages = () => {
     })
 }
 
-loadMessages();
+//refresh list intermittently
+const refreshIntervalMsg = 3000;
+document.addEventListener("DOMContentLoaded", () => {
+    loadMessages();
+    setInterval(loadMessages, refreshIntervalMsg)
+})
 
