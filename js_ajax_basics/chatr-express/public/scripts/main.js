@@ -20,30 +20,30 @@ fetch("http://localhost:3434/messages")
 .then(console.table)
 
 //list of messages
-const loadMessages = () => {
-    fetch("/messages")
-    .then(res => res.json())
-    .then(messages => {
-        const messagesContainer = document.querySelector("#messages");
-        let messagesHTML = "";
-        messages.forEach(message => {
-            messagesHTML += `
-            <li>
-                ${message.body}
-                <i data-id={message.id} class="delete-link">x</i>
-            </li>
-            `;
-        })
-        messagesContainer.innerHTML = messagesHTML
-    })
-}
+// const loadMessages = () => {
+//     fetch("/messages")
+//     .then(res => res.json())
+//     .then(messages => {
+//         const messagesContainer = document.querySelector("#messages");
+//         let messagesHTML = "";
+//         messages.forEach(message => {
+//             messagesHTML += `
+//             <li>
+//                 ${message.body}
+//                 <i data-id={message.id} class="delete-link">x</i>
+//             </li>
+//             `;
+//         })
+//         messagesContainer.innerHTML = messagesHTML
+//     })
+// }
 
-//refresh list intermittently
-const refreshIntervalMsg = 3000;
-document.addEventListener("DOMContentLoaded", () => {
-    loadMessages();
-    setInterval(loadMessages, refreshIntervalMsg)
-})
+// //refresh list intermittently
+// const refreshIntervalMsg = 3000;
+// document.addEventListener("DOMContentLoaded", () => {
+//     loadMessages();
+//     setInterval(loadMessages, refreshIntervalMsg)
+// })
 
 //POST AJAJ req ro create hard code messages
 // const fd = new FormData();
@@ -53,8 +53,50 @@ document.addEventListener("DOMContentLoaded", () => {
 //     body: fd
 // })
 
-fetch("/messages", {
-    method: "POST",
-    headers: { "Content-type": "application/json"},
-    body: JSON.stringify({ body: "Goodbye World"})
+// fetch("/messages", {
+//     method: "POST",
+//     headers: { "Content-type": "application/json"},
+//     body: JSON.stringify({ body: "Goodbye World"})
+// })
+
+const Message = {
+    index(){
+        return fetch("http://localhost:3434/messages")
+        .then(response => response.json())
+    },
+    create(params){
+        return fetch('/messages', {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(params)
+        })
+    },
+    delete(id){
+        return fetch(`/messages/${id}`, {
+            method: "DELETE"
+        })
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const messagesUL = document.querySelector("#messages")
+    const messageForm = document.querySelector("#new-message")
+    
+    const refreshMessages = () => {
+        Message.index()
+        .then(messages => {
+            messagesUL.innerHTML = messages.map( message => {
+                return `
+                <li>
+                    <strong>${message.id}</strong>
+                    ${message.body}
+                    <i data-id={message.id} class="delete-link">x</i>
+                </li>
+                `;
+            }).join('')
+        })
+    }
+
+    setInterval(refreshMessages, 3000)
+
 })
