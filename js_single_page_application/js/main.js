@@ -72,6 +72,33 @@ const Question = {
     }
 }
 
+//======Navigation=========>
+
+function navigateTo(id){
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active')
+    })
+
+    document.querySelector(`.page#${id}`).classList.add('active')
+
+    document.querySelectorAll('a.item').forEach(page => {
+        page.classList.remove('active')
+    })
+}
+
+const navbar = document.querySelector('.menu.navbar')
+
+navbar.addEventListener('click', event => {
+    const navLink = event.target.closest('a')
+
+    if(navLink){
+        event.preventDefault()
+        const pageId = navLink.dataset.target
+        navigateTo(pageId)
+    }
+})
+
+
 //declare a container for the list of questions
 const questionsContainer = document.querySelector('.question-list');
 //Index loading questions
@@ -87,6 +114,24 @@ function loadQuestions(){
             </li>
             `
         }).join("");
+    })
+}
+
+const questionShowPage = document.querySelector('#question-show')
+
+function renderQuestionShowPage(id){
+    Question.show(id)
+    .then(({ id, title, body, author, like_count }) => {
+        questionShowPage.innerHTML = `
+        <h2>${title}</h2>
+        <p<${body}</p>
+        <small>${like_count}</small>
+        <small>Asked by: ${author.full_name}</small>
+        <div>
+            <button data-action="edit" data-id="${id} href="#">Edit</button>
+            <button data-action="delete" data-id="${id} href="#">Delete</button>
+        </div>
+        `
     })
 }
 
