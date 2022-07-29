@@ -79,6 +79,7 @@ function loadQuestions(){
     Question.index()
     .then(questions => {
         //iterate through each question and each question will return a string item
+        console.log(questions)
         questionsContainer.innerHTML = questions.map( q => {
             return `
             <li>
