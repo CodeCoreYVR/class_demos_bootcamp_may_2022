@@ -84,6 +84,9 @@ function navigateTo(id){
     document.querySelectorAll('a.item').forEach(page => {
         page.classList.remove('active')
     })
+
+    const navLink = document.querySelector(`a[data-target=${id}]`)
+    if (navLink) { navLink.classList.add('active')}
 }
 
 const navbar = document.querySelector('.menu.navbar')
@@ -124,7 +127,7 @@ function renderQuestionShowPage(id){
     .then(({ id, title, body, author, like_count }) => {
         questionShowPage.innerHTML = `
         <h2>${title}</h2>
-        <p<${body}</p>
+        <p>${body}</p>
         <small>${like_count}</small>
         <small>Asked by: ${author.full_name}</small>
         <div>
@@ -132,9 +135,20 @@ function renderQuestionShowPage(id){
             <button data-action="delete" data-id="${id} href="#">Delete</button>
         </div>
         `
+        navigateTo('question-show')
     })
 }
 
 loadQuestions();
+
+//Navigate to specific question show page when clicking on the question's link in the index
+questionsContainer.addEventListener('click' , event => {
+    event.preventDefault()
+
+    if (event.target.matches('a.question-link')){
+        const questionId = event.target.dataset.id
+        renderQuestionShowPage(questionId)
+    }
+})
 
 
