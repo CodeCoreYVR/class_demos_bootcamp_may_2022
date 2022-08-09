@@ -82,6 +82,16 @@ const Question = {
     show(id){
         return fetch(`${baseURL}/questions/${id}`)
         .then(res => res.json());
+    },
+    update(id, params){
+        return fetch(`${baseURL}/questions/${id}`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+              "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(params)
+        }).then(res => res.json())
     }
 }
 
@@ -188,6 +198,24 @@ questionsContainer.addEventListener('click' , event => {
     }
 })
 
+//Navigate to edit page from questionShowPage
+questionShowPage.addEventListener('click', event => {
+    event.preventDefault()
+    const { dataset } = event.target
+    const questionId = dataset.id
+    const action = dataset.action
+  
+    if (action === 'edit') {
+      Question.show(questionId).then(({ id, title, body }) => {
+        // populate the edit question form
+        document.querySelector('#edit-question-form input[name=title]').value = title
+        document.querySelector('#edit-question-form textarea[name=body]').value = body
+        document.querySelector('#edit-question-form input[name=id]').value = id
+        navigateTo('question-edit')
+      })
+    }
+  })
+
 //Create a new question
 const newQuestionForm = document.querySelector('#new-question-form');
 newQuestionForm.addEventListener('submit', (event) => {
@@ -202,9 +230,32 @@ newQuestionForm.addEventListener('submit', (event) => {
         body: formData.get('body')
     }
     Question.create(newQuestionParams)
-    .then(data => {
-        console.log('Question created!')
-        console.log(data)
+    // .then(data => {
+    //     console.log('Question created!')
+    //     console.log(data)
+    // })
+    .then(({ id }) => {
+        loadQuestions()
+        renderQuestionShowPage(id)
+        navigateTo('question-show')
     })
 })
 
+//Edit an existing question
+const editQuestionForm = document.querySelector('#edit-question-form');
+editQuestionForm.addEventListener('submit', (event) =>{
+    event.preventDefault();
+
+    const form = event.currentTarget
+    const formData = new FormData(form);
+    const questionParams = {
+        title: formData.get('title'),
+        body: formData.get('body')
+    }
+    Question.update(formData.get('id'), questionParams)
+    .then(({ id }) => {
+        loadQuestions()
+        renderQuestionShowPage(id)
+        navigateTo('question-show')
+    })
+})
