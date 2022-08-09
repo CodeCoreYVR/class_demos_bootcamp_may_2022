@@ -92,6 +92,12 @@ const Question = {
             },
             body: JSON.stringify(params)
         }).then(res => res.json())
+    },
+    destroy(id) {
+        return fetch(`${baseURL}/questions/${id}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        })
     }
 }
 
@@ -198,7 +204,7 @@ questionsContainer.addEventListener('click' , event => {
     }
 })
 
-//Navigate to edit page from questionShowPage
+//Navigate to edit page from questionShowPage or delete a question
 questionShowPage.addEventListener('click', event => {
     event.preventDefault()
     const { dataset } = event.target
@@ -213,6 +219,15 @@ questionShowPage.addEventListener('click', event => {
         document.querySelector('#edit-question-form input[name=id]').value = id
         navigateTo('question-edit')
       })
+    }
+
+    if (action === 'delete') {
+        Question
+          .destroy(questionId)
+          .then(() => {
+            loadQuestions()
+            navigateTo('question-index')
+          })
     }
   })
 
