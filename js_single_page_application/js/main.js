@@ -72,6 +72,30 @@ const Question = {
     }
 }
 
+//======================Sign In=========================================>
+
+//Sign In AJAX Helper
+const Session = {
+    create(params){
+        return fetch(`${baseURL}/session`, {
+            method: 'POST',
+            credentials: 'include', //need for cookies to be allowed to be sent cross-origin
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        }).then(res => res.json());
+    }
+}
+
+//Hacky Sign-in / "Mock" sign in
+Session.create({
+    email: 'admin@user.com',
+    password: '123'
+})
+
+//======================================================================>
+
 //======Navigation=========>
 
 function navigateTo(id){
