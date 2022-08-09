@@ -1,3 +1,16 @@
+//===================IMPORTANT MESSAGE===================================================>
+
+// 1) Run your Rails API server (awesome answers) on a different terminal with rails s
+// 2) To run the SPA app server, do not use VSCode's Live Server as it doesn't have
+//    all the functionality needed for cross-origin requests
+// 3) Install the http server globally, and use that to run the SPA app instead:
+//    For example, when you type in the following command:
+//    http-server -p 9999
+//    Your app will be available on http://localhost:9999/
+// 4) Make sure the above domain is listed on your Rails API's "whitelist" in cors.rb
+
+//=======================================================================================>
+
 //"http://localhost:3000/api/v1/questions" // GET index
 //"http://localhost:3000/api/v1/questions/:id" // GET show
 //"http://localhost:3000/api/v1/questions" // POST create
@@ -92,7 +105,7 @@ const Session = {
 Session.create({
     email: 'admin@user.com',
     password: '123'
-})
+}).then(res => { console.log(res)})
 
 //======================================================================>
 
@@ -175,4 +188,23 @@ questionsContainer.addEventListener('click' , event => {
     }
 })
 
+//Create a new question
+const newQuestionForm = document.querySelector('#new-question-form');
+newQuestionForm.addEventListener('submit', (event) => {
+    //remember that submit has some default behaviours we want to prevent
+    event.preventDefault();
+    //grab from DOM node
+    const form = event.currentTarget
+    //grab all the data from the form
+    const formData = new FormData(form);
+    const newQuestionParams = {
+        title: formData.get('title'),
+        body: formData.get('body')
+    }
+    Question.create(newQuestionParams)
+    .then(data => {
+        console.log('Question created!')
+        console.log(data)
+    })
+})
 
