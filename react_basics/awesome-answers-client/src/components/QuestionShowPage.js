@@ -7,27 +7,36 @@ class QuestionShowPage extends Component {
   //two ways to declatr state
   constructor(props){
     super(props);
-    this.state = questionData
+    this.state = { question: questionData }
+    this.delete = this.delete.bind(this)
   }
 
   // state = {
   //   question: questionData,
   // }
+
+  delete(){
+
+    this.setState({
+      question: null
+    })
+  }
   
 
   render(){
     return(
       <div>
         <QuestionDetails 
-          title={this.state.title}
-          body={this.state.body}
-          author={this.state.author.full_name}
-          created_at={this.state.created_at}
-          view_count={this.state.view_count}
-        />
+          title={this.state.question.title}
+          body={this.state.question.body}
+          author={this.state.question.author.full_name}
+          created_at={this.state.question.created_at}
+          view_count={this.state.question.view_count}
+          />
+          <button onClick={this.delete}>Delete The Question</button>
   
         <AnswerList list={
-          this.state.answers
+          this.state.question.answers
         } />
   
       </div>
