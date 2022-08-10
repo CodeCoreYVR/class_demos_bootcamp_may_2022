@@ -10,6 +10,7 @@ const AnswerDetails = (props) => {
       <p>
         Answered {created_at.toLocaleString()}
       </p>
+      <button onClick={props.deleteAnswer}>Delete</button>
     </div>
   )
 }

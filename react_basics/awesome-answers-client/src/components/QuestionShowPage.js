@@ -21,6 +21,15 @@ class QuestionShowPage extends Component {
       question: null
     })
   }
+
+  deleteTheAnswer(id){
+    this.setState({
+      question: {
+        ...this.state.question,
+        answers: this.state.question.answers.filter(a => a.id !== id)
+      }
+    })
+  }
   
 
   render(){
@@ -35,9 +44,12 @@ class QuestionShowPage extends Component {
           />
           <button onClick={()=>{this.delete()}}>Delete The Question</button>
   
-        <AnswerList list={
+        <AnswerList 
+        list={
           this.state.question.answers
-        } />
+        }
+        deleteTheAnswer={(id) => this.deleteTheAnswer(id)}
+         />
   
       </div>
     )
