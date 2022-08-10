@@ -1,16 +1,19 @@
 import QuestionDetails from "./QuestionDetails";
 import { Component } from 'react';
+import questionIndexData from '../questionIndexData';
 
 class QuestionIndexPage extends Component {
+    state = {
+        questions: questionIndexData
+    }
     render(){
         return(
           <>
-            {this.props.list.map((q, i)=> {
+            {this.state.questions.map((q, i)=> {
               return <QuestionDetails
                 key={i}
                 title={q.title}
                 body={q.body}
-                author={q.author}
                 created_at={q.created_at}
               />
             })}

@@ -7,7 +7,6 @@ function QuestionDetails(props) {
       <p>
         {props.body}
         <br />
-        By {props.author.full_name}
       </p>
       <p>
         <small>

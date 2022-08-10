@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //   </React.StrictMode>
 // );
 
-root.render(
-  <QuestionShowPage/>
-)
+// root.render(
+//   <QuestionShowPage/>
+// )
 
 // root.render(
 //   <QuestionList
@@ -31,6 +31,9 @@ root.render(
 //   />
 // )
 
+root.render(
+  <QuestionIndexPage/>
+)
 // root.render(
 //     <QuestionIndexPage
 //       list={
