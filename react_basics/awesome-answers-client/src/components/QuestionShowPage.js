@@ -27,11 +27,7 @@ class QuestionShowPage extends Component {
         />
   
         <AnswerList list={
-          [
-            {body: "red", author_name: "Jon", created_at: "2021-10-2"},
-            {body: "yellow", author_name: "Bob", created_at: "2022-1-2"},
-            {body: "blue", author_name: "Mike", created_at: "2022-3-24"},
-          ]
+          this.state.answers
         } />
   
       </div>
