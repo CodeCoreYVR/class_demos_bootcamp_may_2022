@@ -5,6 +5,7 @@ import { Session } from './requests';
 import QuestionIndexPage from './components/QuestionIndexPage';
 import QuestionShowPage from './components/QuestionShowPage';
 import { BrowserRouter, Route } from 'react-router-dom';
+import NavBar from './components/NavBar'
 
 
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
 
     return (
       <BrowserRouter>
+        <NavBar/>
         <Route exact path='/questions' component={QuestionIndexPage}/>
         <Route path='/questions/:id' component={QuestionShowPage} />
       </BrowserRouter>
