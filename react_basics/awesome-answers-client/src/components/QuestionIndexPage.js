@@ -1,7 +1,5 @@
 import QuestionDetails from "./QuestionDetails";
 import { Component } from 'react';
-// import questionIndexData from '../questionIndexData';
-import NewQuestionForm from './NewQuestionForm';
 import { Question } from '../requests';
 import { Link } from 'react-router-dom';
 
@@ -32,14 +30,6 @@ class QuestionIndexPage extends Component {
         })
     }
 
-    createNewQuestion(params){
-        this.setState({
-            questions: [
-                params,
-                ...this.state.questions
-            ]
-        })
-    }
     render(){
         return(
             <>
@@ -50,7 +40,6 @@ class QuestionIndexPage extends Component {
                     })  
                     }
                 </ul>
-                <NewQuestionForm submitForm={(params) => this.createNewQuestion(params)} />
           </>
         )
     }
