@@ -2,13 +2,25 @@ import QuestionDetails from "./QuestionDetails";
 import AnswerList from "./AnswerList";
 import { Component } from 'react';
 import questionData from '../questionData';
+import { Question } from '../requests';
 
 class QuestionShowPage extends Component {
   //two ways to declatr state
   constructor(props){
     super(props);
-    this.state = { question: questionData }
+    this.state = { stateQuestion: {} }
     // this.delete = this.delete.bind(this)
+  }
+
+  componentDidMount(){
+    Question.show(123) //just hard code for now
+    .then((fetchedAPIquestion) => {
+      this.setState((state) => {
+        return {
+          stateQuestion : fetchedAPIquestion
+        }
+      })
+    })
   }
 
   // state = {
@@ -33,20 +45,21 @@ class QuestionShowPage extends Component {
   
 
   render(){
+    const question = this.state.stateQuestion
     return(
       <div>
         <QuestionDetails 
-          title={this.state.question.title}
-          body={this.state.question.body}
-          author={this.state.question.author.full_name}
-          created_at={this.state.question.created_at}
-          view_count={this.state.question.view_count}
+          title={question.title}
+          body={question.body}
+          author={question.author}
+          created_at={question.created_at}
+          view_count={question.view_count}
           />
           <button onClick={()=>{this.delete()}}>Delete The Question</button>
   
         <AnswerList 
         list={
-          this.state.question.answers
+          question.answers
         }
         deleteTheAnswer={(id) => this.deleteTheAnswer(id)}
          />

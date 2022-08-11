@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 // import CurrentDateTime from './components/CurrentDateTime'
 import { Session } from './requests';
 import QuestionIndexPage from './components/QuestionIndexPage';
+import QuestionShowPage from './components/QuestionShowPage';
+
 
 class App extends Component {
   constructor(props){
@@ -30,7 +32,9 @@ class App extends Component {
   render(){
 
     return (
-      <QuestionIndexPage/>
+      <>
+        <QuestionShowPage/>
+      </>
     );
   }
 }

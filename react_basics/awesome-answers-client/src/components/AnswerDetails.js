@@ -8,7 +8,7 @@ const AnswerDetails = (props) => {
         By {author_name}
       </p>
       <p>
-        Answered {created_at.toLocaleString()}
+        Answered {created_at}
       </p>
       <button onClick={props.deleteAnswer}>Delete</button>
     </div>
