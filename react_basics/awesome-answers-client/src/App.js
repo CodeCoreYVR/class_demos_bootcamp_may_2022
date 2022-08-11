@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Session } from './requests';
 import QuestionIndexPage from './components/QuestionIndexPage';
 import QuestionShowPage from './components/QuestionShowPage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 
 class App extends Component {
@@ -33,10 +33,10 @@ class App extends Component {
   render(){
 
     return (
-      <Routes>
-        <Route path='/questions' element={<QuestionIndexPage/>}/>
-        <Route path='/questions/:id' element={<QuestionShowPage/>} />
-      </Routes>
+      <BrowserRouter>
+        <Route exact path='/questions' component={QuestionIndexPage}/>
+        <Route path='/questions/:id' component={QuestionShowPage} />
+      </BrowserRouter>
     );
   }
 }

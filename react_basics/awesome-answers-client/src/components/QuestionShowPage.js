@@ -13,7 +13,8 @@ class QuestionShowPage extends Component {
   }
 
   componentDidMount(){
-    Question.show(123) //just hard code for now
+    console.log(this.props.match.params.id)
+    Question.show(this.props.match.params.id) //no more hard copy - display the first that matches. Have access o the params ant the match method through our router
     .then((fetchedAPIquestion) => {
       this.setState((state) => {
         return {
