@@ -10,6 +10,7 @@ import NewQuestionPage from './components/NewQuestionPage';
 import { User } from './requests';
 import SignInPage from './components/SignInPage';
 import AuthRoute from './components/AuthRoute';
+import SignUpPage from './components/SignUpPage';
 
 
 class App extends Component {
@@ -48,6 +49,9 @@ class App extends Component {
           render={(routeProps) => <SignInPage {...routeProps} onSignIn={this.getCurrentUser} />}
           >
           </Route>
+          <Route exact path='/sign_up'
+          render={(routeProps) => <SignUpPage {...routeProps} onSignUp={this.getCurrentUser} />}
+          ></Route>
           <Route exact path='/questions' component={QuestionIndexPage}/>
           <AuthRoute isAuthenticated={!!this.state.user} component={NewQuestionPage} />
           <Route exact path='/questions/:id' component={QuestionShowPage}></Route>

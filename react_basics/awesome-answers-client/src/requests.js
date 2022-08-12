@@ -68,6 +68,16 @@ export const User = {
         return fetch(`${baseURL}/users/current`, {
             credentials: 'include', //need for cookies to be allowed to be sent cross-origin
         }).then(res => res.json());
+    },
+    create(params){
+        return fetch(`${baseURL}/users`, {
+            method: 'POST',
+            credentials: 'include', //need for cookies to be allowed to be sent cross-origin
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        }).then(res => res.json());  
     }
 }
 
