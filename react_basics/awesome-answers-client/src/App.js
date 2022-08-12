@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 import NewQuestionPage from './components/NewQuestionPage';
 import { User } from './requests';
 import SignInPage from './components/SignInPage';
+import AuthRoute from './components/AuthRoute';
 
 
 class App extends Component {
@@ -48,8 +49,8 @@ class App extends Component {
           >
           </Route>
           <Route exact path='/questions' component={QuestionIndexPage}/>
-          <Route exact path='/questions/new' component={NewQuestionPage}></Route>
-          <Route exact path='/questions/:id' component={QuestionShowPage} />
+          <AuthRoute isAuthenticated={!!this.state.user} component={NewQuestionPage} />
+          <Route exact path='/questions/:id' component={QuestionShowPage}></Route>
         </Switch>
       </BrowserRouter>
     );
