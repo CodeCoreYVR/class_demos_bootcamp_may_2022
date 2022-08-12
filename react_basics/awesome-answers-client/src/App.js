@@ -53,7 +53,7 @@ class App extends Component {
           render={(routeProps) => <SignUpPage {...routeProps} onSignUp={this.getCurrentUser} />}
           ></Route>
           <Route exact path='/questions' component={QuestionIndexPage}/>
-          <AuthRoute isAuthenticated={!!this.state.user} component={NewQuestionPage} />
+          <AuthRoute isAuthenticated={!!this.state.user} exact path='/questions/new' component={NewQuestionPage} />
           <Route exact path='/questions/:id' component={QuestionShowPage}></Route>
         </Switch>
       </BrowserRouter>
