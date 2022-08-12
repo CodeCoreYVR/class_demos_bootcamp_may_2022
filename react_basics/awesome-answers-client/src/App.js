@@ -1,12 +1,14 @@
 import './App.css';
 import React, { Component } from 'react';
 // import CurrentDateTime from './components/CurrentDateTime'
-import { Session } from './requests';
+// import { Session } from './requests';
 import QuestionIndexPage from './components/QuestionIndexPage';
 import QuestionShowPage from './components/QuestionShowPage';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import NewQuestionPage from './components/NewQuestionPage';
+import { User } from './requests';
+import SignInPage from './components/SignInPage';
 
 
 class App extends Component {
@@ -19,25 +21,29 @@ class App extends Component {
   }
 
   componentDidMount(){
-    Session.create(
-      {
-        email: "admin@user.com",
-        password: '123'
+    this.getCurrentUser()
+  }
+
+  getCurrentUser = () => {
+    return User.current().then(user => {
+
+      if (user?.id){
+        this.setState(state => {
+          return { user }
+        })
       }
-    ).then( fetchedUser => {
-      this.setState((state) => {
-        return {
-          user : fetchedUser
-        }
-      })
     })
   }
   render(){
 
     return (
       <BrowserRouter>
-        <NavBar/>
+        <NavBar currentUser={this.state.user}/>
         <Switch>
+          <Route exact path='/sign_in'
+          render={(routeProps) => <SignInPage {...routeProps} onSignIn={this.getCurrentUser} />}
+          >
+          </Route>
           <Route exact path='/questions' component={QuestionIndexPage}/>
           <Route exact path='/questions/new' component={NewQuestionPage}></Route>
           <Route exact path='/questions/:id' component={QuestionShowPage} />

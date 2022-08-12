@@ -57,4 +57,12 @@ export const Session = {
     }
 }
 
+export const User = {
+    current(){
+        return fetch(`${baseURL}/users/current`, {
+            credentials: 'include', //need for cookies to be allowed to be sent cross-origin
+        }).then(res => res.json());
+    }
+}
+
 

@@ -89,6 +89,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :questions, only: [:index, :show, :create, :update, :destroy]
       resource :session, only: [:create, :destroy]
+      resources :users, only: [:create] do
+        #get('users/current', {to: 'users#current'})
+        #default api/v1/users/:id/current
+        get :current, on: :collection #api/v1/users/current
+      end
     end
 
     # namespace v2: do
