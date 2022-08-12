@@ -54,6 +54,12 @@ export const Session = {
             },
             body: JSON.stringify(params)
         }).then(res => res.json());
+    },
+    destroy(){
+        return fetch(`${baseURL}/session`, {
+            method: 'DELETE',
+            credentials: 'include' //need for cookies to be allowed to be sent cross-origin
+        }).then(res => res.json());
     }
 }
 
