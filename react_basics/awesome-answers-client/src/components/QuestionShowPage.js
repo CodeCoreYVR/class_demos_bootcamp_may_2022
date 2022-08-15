@@ -1,74 +1,71 @@
 import QuestionDetails from "./QuestionDetails";
 import AnswerList from "./AnswerList";
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import questionData from '../questionData';
 import { Question } from '../requests';
 
-class QuestionShowPage extends Component {
-  //two ways to declatr state
-  constructor(props){
-    super(props);
-    this.state = { stateQuestion: {} }
-    // this.delete = this.delete.bind(this)
-  }
+export default function QuestionShowPage(props) {
+  
+  const [ question, setQuestion] = useState({})
 
-  componentDidMount(){
-    console.log(this.props.match.params.id)
-    Question.show(this.props.match.params.id) //no more hard copy - display the first that matches. Have access o the params ant the match method through our router
-    .then((fetchedAPIquestion) => {
-      this.setState((state) => {
-        return {
-          stateQuestion : fetchedAPIquestion
-        }
+
+    useEffect(() => {
+      
+      console.log(props.match.params.id)
+      Question.show(props.match.params.id) //no more hard copy - display the first that matches. Have access o the params ant the match method through our router
+      .then((fetchedAPIquestion) => {
+        setQuestion(fetchedAPIquestion)
       })
-    })
-  }
+    }, [])
+    
+  
 
   // state = {
   //   question: questionData,
   // }
 
-  delete(){
+  // delete(){
 
-    this.setState({
-      question: null
-    })
-  }
+  //   this.setState({
+  //     question: null
+  //   })
+  // }
 
-  deleteTheAnswer(id){
-    this.setState({
-      question: {
-        ...this.state.question,
-        answers: this.state.question.answers.filter(a => a.id !== id)
-      }
+  const deleteTheAnswer = id => {
+    const {answers, ...rest} = question;
+    setQuestion({
+      
+        answers: answers.filter(a => a.id !== id),
+        ...rest
+      
     })
   }
   
 
-  render(){
-    const question = this.state.stateQuestion
+  
+    const { title, body, author, view_count, created_at } = question
     return(
       <div>
         <QuestionDetails 
-          title={question.title}
-          body={question.body}
-          author={question.author}
-          created_at={question.created_at}
-          view_count={question.view_count}
+          title={title}
+          body={body}
+          author={author}
+          created_at={created_at}
+          view_count={view_count}
           />
-          <button onClick={()=>{this.delete()}}>Delete The Question</button>
+          {/* <button onClick={()=>{delete()}}>Delete The Question</button> */}
   
         <AnswerList 
         list={
           question.answers
         }
-        deleteTheAnswer={(id) => this.deleteTheAnswer(id)}
+        deleteTheAnswer={(id) => deleteTheAnswer(id)}
          />
   
       </div>
     )
-  }
+  
 }
 
-export default QuestionShowPage
+
 
