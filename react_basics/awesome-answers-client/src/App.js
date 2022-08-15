@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import CurrentDateTime from './components/CurrentDateTime'
 // import { Session } from './requests';
 import QuestionIndexPage from './components/QuestionIndexPage';
@@ -15,54 +15,52 @@ import UseStateHook from "./components/UseStateHook";
 import UseEffectHook from "./components/UseEffectHook";
 
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      clocksCount: true, //an array of something
-      user: null
-    }
-  }
+export default function App() {
+  const [ user, setUser ] = useState(null)
+  const [clocksCount, setClocksCount] = useState(true)
 
-  componentDidMount(){
-    this.getCurrentUser()
-  }
 
-  getCurrentUser = () => {
+  // componentDidMount(){
+  //   this.getCurrentUser()
+  // }
+  useEffect(() => {
+    getCurrentUser();
+  }, [])
+  
+
+  const getCurrentUser = () => {
     return User.current().then(user => {
 
       if (user?.id){
-        this.setState(state => {
-          return { user }
-        })
+        setUser(user)
       }
     })
   }
 
-  onSignOut = () => { this.setState( { user: null })}
+  const onSignOut = () => { setUser( null )}
 
-  render(){
+  
 
     return (
       <BrowserRouter>
-        <NavBar currentUser={this.state.user} onSignOut={this.onSignOut} clocksCount={this.state.clocksCount} />
+        <NavBar currentUser={user} onSignOut={onSignOut} clocksCount={clocksCount} />
         <Switch>
           <Route exact path='/sign_in'
-          render={(routeProps) => <SignInPage {...routeProps} onSignIn={this.getCurrentUser} />}
+          render={(routeProps) => <SignInPage {...routeProps} onSignIn={getCurrentUser} />}
           >
           </Route>
           <Route exact path='/sign_up'
-          render={(routeProps) => <SignUpPage {...routeProps} onSignUp={this.getCurrentUser} />}
+          render={(routeProps) => <SignUpPage {...routeProps} onSignUp={getCurrentUser} />}
           ></Route>
           <Route exact path='/questions' component={QuestionIndexPage}/>
-          <AuthRoute isAuthenticated={!!this.state.user} exact path='/questions/new' component={NewQuestionPage} />
+          <AuthRoute isAuthenticated={!!user} exact path='/questions/new' component={NewQuestionPage} />
           <Route exact path='/questions/:id' component={QuestionShowPage}></Route>
           <Route path='/use_state' component={UseStateHook} />
           <Route path='/use_effect' component={UseEffectHook} />
         </Switch>
       </BrowserRouter>
     );
-  }
+  
 }
 
-export default App;
+
