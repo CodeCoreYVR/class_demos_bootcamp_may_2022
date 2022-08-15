@@ -1,8 +1,9 @@
 import React from 'react';
 import { Session } from '../requests';
 import {NavLink} from 'react-router-dom';
+import CurrentDateTime from "./CurrentDateTime";
 
-const NavBar = ({ currentUser, onSignOut }) => {
+const NavBar = ({ currentUser, onSignOut, clocksCount }) => {
     const handleSignOut = () => {
         Session.destroy().then(() => {
             onSignOut()
@@ -20,6 +21,8 @@ const NavBar = ({ currentUser, onSignOut }) => {
                         <span>Welcome, { currentUser.first_name }</span>
                         -
                         <button onClick={handleSignOut}>Sign Out</button>
+                        -
+                        <div>{clocksCount && <CurrentDateTime/>}</div>
                     </>
                 ) : (
                     <>
