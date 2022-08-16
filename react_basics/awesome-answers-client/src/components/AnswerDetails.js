@@ -5,10 +5,10 @@ const AnswerDetails = (props) => {
       <p>
         {body}
         <br />
-        By {author_name}
+        -> {author_name}
       </p>
       <p>
-        Answered {created_at}
+        <small>Answered: {created_at.toLocaleString()}</small>
       </p>
       <button onClick={deleteTheAnswer}>Delete</button>
     </div>

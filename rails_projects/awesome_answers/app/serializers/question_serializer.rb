@@ -37,7 +37,7 @@ class QuestionSerializer < ActiveModel::Serializer
 
 
   class AnswerSerializer < ActiveModel::Serializer
-    attributes :id, :author_full_name, :body
+    attributes :id, :author_full_name, :body, :created_at
 
     # #customized method:
     # #rename user to author to make it more understandable for the person requesting data from our api

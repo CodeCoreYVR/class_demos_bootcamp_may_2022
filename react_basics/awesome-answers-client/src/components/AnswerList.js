@@ -11,7 +11,7 @@ export default function AnswerList(props) {
           answers.map((a,i) => {
             return <AnswerDetails key={i} 
             body={a.body}
-            author_name={a.author_name}
+            author_name={a.author_full_name}
             created_at={a.created_at}
             deleteTheAnswer={() => props.deleteTheAnswer(a.id)}
             />

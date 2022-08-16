@@ -11,7 +11,8 @@ function QuestionDetails(props) {
       <p>
         <small>
           Seen {props.view_count} times
-          {props.created_at ? props.created_at.toLocaleString() : null}
+          |
+          Created: {props.created_at ? props.created_at.toLocaleString() : null}
         </small>
       </p>
     </>
