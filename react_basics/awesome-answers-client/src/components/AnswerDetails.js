@@ -1,5 +1,5 @@
 const AnswerDetails = (props) => {
-  const {body, author_name, created_at} = props
+  const {body, author_name, created_at, deleteTheAnswer} = props
   return(
     <div>
       <p>
@@ -10,7 +10,7 @@ const AnswerDetails = (props) => {
       <p>
         Answered {created_at}
       </p>
-      <button onClick={props.deleteAnswer}>Delete</button>
+      <button onClick={deleteTheAnswer}>Delete</button>
     </div>
   )
 }
