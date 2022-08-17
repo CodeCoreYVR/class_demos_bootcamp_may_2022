@@ -15,7 +15,7 @@ class NewQuestionPage extends Component {
         .then((question) => {
             console.log(`question: ${question.errors}`)
             if (question.errors){
-                console.log(`QuestionErrors: ${question.errors}`)
+                console.log(`QuestionErrors: ${question.errors}`, question.errors)
                 this.setState({errors: question.errors})
             } else {
                 //the history prop contains methods used to navigate
