@@ -11,6 +11,23 @@ class Api::ApplicationController < ApplicationController
     
     skip_before_action :verify_authenticity_token
 
+    #Error messaging handling
+    #To send a json error message when user types in the wrong path
+    #for example: localhost:3000/api/v1/somethingwrong
+
+    def not_found
+        render(
+            json: {
+                errors: [
+                    {
+                        type: "Not found"
+                    }
+                ]
+            },
+            status: :not_found  #alias for 404 in rails
+        )
+    end
+
     private
     def authenticate_user!
         redirect_to new_session_path, notice: "Please sign in" unless user_signed_in?
