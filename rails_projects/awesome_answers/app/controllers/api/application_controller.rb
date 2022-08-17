@@ -21,6 +21,8 @@ class Api::ApplicationController < ApplicationController
     #NOTE: Use this very carefully and make sure to always log the error messages in some form
     rescue_from StandardError, with: :standard_error
 
+    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
+
     #Error messaging handling
     #To send a json error message when user types in the wrong path
     #for example: localhost:3000/api/v1/somethingwrong
@@ -58,6 +60,33 @@ class Api::ApplicationController < ApplicationController
                     }
                 ]
             }
+        )
+    end
+
+    def record_invalid(error)
+        #Our object should look something like this:
+        # json: {
+        #     errors: [
+        #         {
+        #             type: "ActiveRecord::InvalidRecord",
+        #             record_type: "Question",
+        #             field: "body",
+        #             message: "..."   
+        #         }
+        #     ]
+        # },
+
+        invalid_record = error.record
+        errors = invalid_record.errors.map do |field, message|
+            {
+                type: invalid_record.class.to_s,
+                field: field,
+                message: message
+            }
+        end
+        render(
+            json: { status: 422, errors: errors},
+            status: 422 #alias :unprocessable entity
         )
     end
 end
