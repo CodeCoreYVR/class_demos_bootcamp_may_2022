@@ -6,3 +6,4 @@ import "popper"
 import "bootstrap"
 
 import './selectize';
+import "underscore";

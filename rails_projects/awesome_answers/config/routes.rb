@@ -52,7 +52,7 @@ Rails.application.routes.draw do
     get :liked, on: :collection
   end
 
-  resources :users, only:[:new, :create]
+  resources :users, only:[:new, :create, :show]
 
   resource :session, only:[:new, :create, :destroy]
   # 'resource' is singular instead of 'resources'
@@ -115,5 +115,5 @@ Rails.application.routes.draw do
   #:provider will aloow us to use the same controller and action for different authentication systems
   #such as github, twittter, facebook, etc.
 
-  
+
 end

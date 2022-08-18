@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def show
+    @user = User.find params[:id]
+  end
+
   def new
     @user = User.new
   end
@@ -9,6 +13,7 @@ class UsersController < ApplicationController
       :first_name,
       :last_name,
       :email,
+      :address,
       :password,
       :password_confirmation
     )
