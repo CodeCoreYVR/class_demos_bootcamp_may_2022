@@ -21,6 +21,7 @@ super_user = User.create(
   first_name: "Admin",
   last_name: "User",
   email: "admin@user.com",
+  address: "628 6th Avenue, New Westminster, BC,Canada", #CodeCore's address
   password: PASSWORD,
   is_admin: true
 )
@@ -31,6 +32,9 @@ super_user = User.create(
   User.create(
     first_name: first_name,
     last_name: last_name,
+    #Stanley Park coordinates
+    latitude: 49.3043,
+    longitude: -123.1443, #negative is West coordinate
     email: "#{first_name}@#{last_name}.com",
     password: PASSWORD
   )
