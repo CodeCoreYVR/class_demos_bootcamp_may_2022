@@ -109,4 +109,11 @@ Rails.application.routes.draw do
     #via all will match with all possible methods
   end
 
+  #OmniAuth Routes
+  get "/auth/github", as: :sign_in_with_github
+  get "/auth/:provider/callback", to: "callbacks#index"
+  #:provider will aloow us to use the same controller and action for different authentication systems
+  #such as github, twittter, facebook, etc.
+
+  
 end
