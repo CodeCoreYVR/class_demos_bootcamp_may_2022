@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 
-function PokeList({list}){
+function PokeList({list, navigation}){
     return(
         <ScrollView>
             {
                 list.map((pokemon, i) => {
                     return(
-                        <TouchableHighlight key={i} underlayColor='lightblue' onPress={(event)=>{console.log(event)}}>
+                        <TouchableHighlight key={i} underlayColor='lightblue' onPress={(event)=>{
+                            navigation.navigate("Pokemon Details", {pokemon})
+                            }}>
                             <View style={StyleSheet.pokemon}>
                                 <Text>{pokemon.name}</Text>
                             </View>
