@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 
 function PokeList({list}){
     return(
@@ -7,9 +7,11 @@ function PokeList({list}){
             {
                 list.map((pokemon, i) => {
                     return(
-                        <View key={i} style={StyleSheet.pokemon}>
-                            <Text>{pokemon.name}</Text>
-                        </View>
+                        <TouchableHighlight key={i} underlayColor='lightblue' onPress={(event)=>{console.log(event)}}>
+                            <View style={StyleSheet.pokemon}>
+                                <Text>{pokemon.name}</Text>
+                            </View>
+                        </TouchableHighlight>
                     )
                 })
             }
