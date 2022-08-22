@@ -94,6 +94,7 @@ Rails.application.routes.draw do
         #default api/v1/users/:id/current
         get :current, on: :collection #api/v1/users/current
       end
+      resources :gifts, only: [:create]
     end
 
     # namespace v2: do

@@ -13,6 +13,7 @@ export default function AnswerList(props) {
             body={a.body}
             author_name={a.author_full_name}
             created_at={a.created_at}
+            id={a.id}
             deleteTheAnswer={() => props.deleteTheAnswer(a.id)}
             />
           })
